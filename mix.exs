@@ -128,10 +128,14 @@ defmodule NervesRp3FirmewareKiosk.MixProject do
 
   defp build_runner_opts() do
     # Download source files first to get download errors right away.
-    # BR2_JLEVEL=2 caps per-package parallelism — WPE WebKit's C++ units
+    # BR2_JLEVEL caps per-package parallelism — WPE WebKit's C++ units
     # can each need ~3–4 GB to compile, so unbounded parallelism OOM-kills
-    # the Docker container on machines with limited container memory.
-    [make_args: primary_site() ++ ["BR2_JLEVEL=2", "source", "all", "legal-info"]]
+    # constrained build hosts. The default sized GH Actions runner has
+    # 4 vCPU and 16 GB RAM, so 4 parallel WPE jobs (~12 GB peak) fits
+    # comfortably and keeps the compile under the 6-hour job ceiling.
+    jlevel = System.get_env("BR2_JLEVEL") || "4"
+
+    [make_args: primary_site() ++ ["BR2_JLEVEL=#{jlevel}", "source", "all", "legal-info"]]
   end
 
   defp primary_site() do
