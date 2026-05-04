@@ -96,9 +96,13 @@ BR2_PACKAGE_MESA3D_OPENGL_ES=y
 BR2_PACKAGE_WAYLAND=y
 BR2_PACKAGE_WESTON=y
 
-# WPE WebKit + Cog: lightweight kiosk browser (single-page fullscreen)
+# WPE WebKit + Cog: lightweight kiosk browser (single-page fullscreen).
+# Multimedia (HTML5 video, GStreamer integration in WebKit) is intentionally
+# omitted — that's the largest subsystem of WebKit and adds ~60 min to the
+# build. For our use case (Phoenix LiveView dashboard) the browser doesn't
+# need to play media; alarm audio is played from the BEAM directly via ALSA
+# on the USB speaker.
 BR2_PACKAGE_WPEWEBKIT=y
-BR2_PACKAGE_WPEWEBKIT_MULTIMEDIA=y
 BR2_PACKAGE_COG=y
 
 # Touch + input handling for the DSI touchscreen
@@ -107,8 +111,8 @@ BR2_PACKAGE_LIBINPUT=y
 # TLS over libsoup3 (used by WPE for HTTPS)
 BR2_PACKAGE_LIBSOUP3_SSL=y
 
-# GStreamer plugin for HTML5 video playback in WPE
-BR2_PACKAGE_GST1_PLUGINS_BASE_LIB_OPENGL=y
+# GStreamer GL plugin omitted — only needed when WPE multimedia is enabled.
+# (See WPEWEBKIT_MULTIMEDIA note above.)
 
 # Default UI font for the browser
 BR2_PACKAGE_LIBERATION=y
