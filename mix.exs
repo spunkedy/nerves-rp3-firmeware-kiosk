@@ -131,9 +131,10 @@ defmodule NervesRp3FirmewareKiosk.MixProject do
     # BR2_JLEVEL caps per-package parallelism — WPE WebKit's C++ units
     # can each need ~3–4 GB to compile, so unbounded parallelism OOM-kills
     # constrained build hosts. The default sized GH Actions runner has
-    # 4 vCPU and 16 GB RAM, so 4 parallel WPE jobs (~12 GB peak) fits
-    # comfortably and keeps the compile under the 6-hour job ceiling.
-    jlevel = System.get_env("BR2_JLEVEL") || "4"
+    # 4 vCPU and 16 GB RAM. BR2_JLEVEL=4 OOM-killed the runner mid-WPE
+    # compile (4 jobs × ~4 GB exceeds 16 GB once you add OS + agent
+    # overhead). =3 is the safer middle ground — peak ~9–12 GB.
+    jlevel = System.get_env("BR2_JLEVEL") || "3"
 
     [make_args: primary_site() ++ ["BR2_JLEVEL=#{jlevel}", "source", "all", "legal-info"]]
   end
