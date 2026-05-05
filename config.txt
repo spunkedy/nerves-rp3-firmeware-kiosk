@@ -32,11 +32,12 @@ camera_auto_detect=1
 # wires the backlight (GPIO + PWM). VC4 KMS then sees the DSI panel
 # as a connected DRM connector. Removing these breaks DSI detection
 # entirely (vc4 module loads but registers no card).
-# Pure auto-detect path: firmware probes attached DSI/HDMI panels at boot
-# and loads the right overlays itself (vc4-kms-dsi-7inch, etc.). Don't
-# combine with explicit dtoverlay= lines — they fight over the same
-# device-tree nodes.
-display_auto_detect=1
+# vc4-kms-dsi-7inch is the all-in-one overlay that enables: VC4 GPU
+# (KMS+v3d), the DSI MIPI controller, the official 7" touchscreen panel
+# driver, the FT5406 touch IC, and the backlight. Use it BY ITSELF —
+# combining with vc4-kms-v3d, rpi-ft5406, rpi-backlight, or
+# display_auto_detect causes conflicts that prevent VC4 from starting.
+dtoverlay=vc4-kms-dsi-7inch
 max_framebuffers=2
 disable_overscan=1
 disable_fw_kms_setup=1
