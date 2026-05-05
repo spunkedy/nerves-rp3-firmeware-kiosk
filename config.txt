@@ -27,17 +27,13 @@ dtparam=audio=on
 # Automatically load overlays for detected cameras
 camera_auto_detect=1
 
-# Raspberry Pi 7" DSI Touchscreen + VC4 KMS combined overlay.
-#
-# Under the legacy fbdev path the touchscreen used:
-#   dtoverlay=rpi-ft5406    # touch controller
-#   dtoverlay=rpi-backlight # backlight control
-# But these don't enable the DSI DISPLAY panel under VC4 KMS — Cog's DRM
-# platform plugin sees the DSI connector as "not connected, 0 usable
-# modes". The vc4-kms-dsi-7inch overlay enables the panel + touch + BL
-# all wired through DRM/KMS, which is what Cog/WPE needs.
+# Raspberry Pi 7" DSI Touchscreen under VC4 KMS.
+# display_auto_detect=1 makes the firmware probe attached DSI/HDMI
+# panels and load matching overlays automatically. This is the
+# documented rpi-recommended config for the official 7" touchscreen
+# under DRM/KMS as of recent rpi-firmware releases.
 dtoverlay=vc4-kms-v3d
-dtoverlay=vc4-kms-dsi-7inch
+display_auto_detect=1
 max_framebuffers=2
 disable_overscan=1
 disable_fw_kms_setup=1
