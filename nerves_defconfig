@@ -97,9 +97,12 @@ BR2_PACKAGE_MESA3D=y
 BR2_PACKAGE_MESA3D_GALLIUM_DRIVER_VC4=y
 BR2_PACKAGE_MESA3D_OPENGL_ES=y
 
-# Wayland compositor for the kiosk display server
+# Wayland (Cog uses some wayland headers/libs even on the DRM platform).
 BR2_PACKAGE_WAYLAND=y
-BR2_PACKAGE_WESTON=y
+# BR2_PACKAGE_WESTON intentionally not set — Cog's DRM platform plugin
+# renders directly to /dev/dri/card0 via libwpe + libdrm + Mesa/GBM, no
+# Wayland compositor needed. Weston also has a build-time cairo-PNG
+# dependency that wasn't satisfied in our minimal stack.
 
 # WPE WebKit + Cog: lightweight kiosk browser (single-page fullscreen).
 # Multimedia (HTML5 video, GStreamer integration in WebKit) is intentionally
