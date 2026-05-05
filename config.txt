@@ -27,17 +27,17 @@ dtparam=audio=on
 # Automatically load overlays for detected cameras
 camera_auto_detect=1
 
-# Enable drivers for the Raspberry Pi 7" Touchscreen
+# Raspberry Pi 7" DSI Touchscreen + VC4 KMS combined overlay.
 #
-# This makes it possible to run Scenic out of the box with the popular
-# Raspberry Pi 7" Touchscreen. It appears to be harmless for non-touchscreen
-# users, but if not, let us know!
-dtoverlay=rpi-ft5406
-dtoverlay=rpi-backlight
-
-# Enable VC4 KMS DRM driver — required by Mesa/Wayland/Cog kiosk stack.
-# Replaces the legacy fbdev path with modern DRM/KMS so Weston can run.
+# Under the legacy fbdev path the touchscreen used:
+#   dtoverlay=rpi-ft5406    # touch controller
+#   dtoverlay=rpi-backlight # backlight control
+# But these don't enable the DSI DISPLAY panel under VC4 KMS — Cog's DRM
+# platform plugin sees the DSI connector as "not connected, 0 usable
+# modes". The vc4-kms-dsi-7inch overlay enables the panel + touch + BL
+# all wired through DRM/KMS, which is what Cog/WPE needs.
 dtoverlay=vc4-kms-v3d
+dtoverlay=vc4-kms-dsi-7inch
 max_framebuffers=2
 disable_overscan=1
 disable_fw_kms_setup=1
