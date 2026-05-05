@@ -27,13 +27,14 @@ dtparam=audio=on
 # Automatically load overlays for detected cameras
 camera_auto_detect=1
 
-# Raspberry Pi 7" DSI Touchscreen under VC4 KMS.
-# display_auto_detect=1 makes the firmware probe attached DSI/HDMI
-# panels and load matching overlays automatically. This is the
-# documented rpi-recommended config for the official 7" touchscreen
-# under DRM/KMS as of recent rpi-firmware releases.
+# Raspberry Pi 7" DSI Touchscreen + VC4 KMS.
+# rpi-ft5406 brings up the DSI panel + touch controller; rpi-backlight
+# wires the backlight (GPIO + PWM). VC4 KMS then sees the DSI panel
+# as a connected DRM connector. Removing these breaks DSI detection
+# entirely (vc4 module loads but registers no card).
+dtoverlay=rpi-ft5406
+dtoverlay=rpi-backlight
 dtoverlay=vc4-kms-v3d
-display_auto_detect=1
 max_framebuffers=2
 disable_overscan=1
 disable_fw_kms_setup=1
