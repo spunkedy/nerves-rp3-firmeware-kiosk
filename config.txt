@@ -35,6 +35,10 @@ camera_auto_detect=1
 dtoverlay=rpi-ft5406
 dtoverlay=rpi-backlight
 dtoverlay=vc4-kms-v3d
+# Auto-load the DSI display overlay (vc4-kms-dsi-7inch) when the firmware
+# detects the official 7" panel — without this, vc4-kms-v3d sees HDMI
+# but doesn't bring up the DSI MIPI controller.
+display_auto_detect=1
 max_framebuffers=2
 disable_overscan=1
 disable_fw_kms_setup=1
