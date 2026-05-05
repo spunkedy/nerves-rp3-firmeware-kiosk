@@ -112,7 +112,11 @@ BR2_PACKAGE_COG=y
 
 # Touch + input handling for the DSI touchscreen.
 # eudev is required by libinput's device enumeration and gates Cog's
-# DRM platform plugin (via BR2_PACKAGE_HAS_UDEV).
+# DRM platform plugin (via BR2_PACKAGE_HAS_UDEV). Enabling
+# BR2_PACKAGE_EUDEV requires switching the rootfs device-creation method
+# from the stock devtmpfs to eudev so eudev owns /dev.
+# BR2_ROOTFS_DEVICE_CREATION_DYNAMIC_DEVTMPFS is not set
+BR2_ROOTFS_DEVICE_CREATION_DYNAMIC_EUDEV=y
 BR2_PACKAGE_EUDEV=y
 BR2_PACKAGE_LIBINPUT=y
 
