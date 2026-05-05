@@ -110,8 +110,16 @@ BR2_PACKAGE_WESTON=y
 BR2_PACKAGE_WPEWEBKIT=y
 BR2_PACKAGE_COG=y
 
-# Touch + input handling for the DSI touchscreen
+# Touch + input handling for the DSI touchscreen.
+# eudev is required by libinput's device enumeration and gates Cog's
+# DRM platform plugin (via BR2_PACKAGE_HAS_UDEV).
+BR2_PACKAGE_EUDEV=y
 BR2_PACKAGE_LIBINPUT=y
+
+# Cog DRM platform plugin: renders directly to /dev/dri/card0 via libwpe
+# + Mesa/GBM. No Wayland compositor needed — perfect for a single-page
+# kiosk on a DSI touchscreen.
+BR2_PACKAGE_COG_PLATFORM_DRM=y
 
 # TLS over libsoup3 (used by WPE for HTTPS)
 BR2_PACKAGE_LIBSOUP3_SSL=y
