@@ -1,9 +1,12 @@
-defmodule NervesRp3FirmewareKiosk.MixProject do
+defmodule Rpi3Kiosk.MixProject do
   use Mix.Project
 
   @github_organization "spunkedy"
   @github_repo "nerves-rp3-firmeware-kiosk"
-  @app :nerves_rp3_firmeware_kiosk
+  # Short app name: chromium's ninja generates rsp filenames that exceed
+  # Linux's 255-char limit when the artifact path contains a long
+  # package name. `:rpi3_kiosk` saves us ~15 chars on every path.
+  @app :rpi3_kiosk
   @source_url "https://github.com/#{@github_organization}/#{@github_repo}"
   @version Path.join(__DIR__, "VERSION")
            |> File.read!()
