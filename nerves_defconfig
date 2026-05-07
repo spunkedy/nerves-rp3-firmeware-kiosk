@@ -108,6 +108,14 @@ BR2_PACKAGE_RPI_LIBCAMERA_V4L2=y
 # Qt5 WebEngine is Chromium-based, so HTML5 + JS + WebSocket + LiveView
 # all work fine. Compile is slow (~3 hours on this build host) but only
 # happens once per system release.
+#
+# qt5webengine has a hard dependency on libudev (BR2_PACKAGE_HAS_UDEV).
+# eudev provides it; restoring eudev requires switching the rootfs
+# device-creation method from devtmpfs to eudev so eudev owns /dev.
+# BR2_ROOTFS_DEVICE_CREATION_DYNAMIC_DEVTMPFS is not set
+BR2_ROOTFS_DEVICE_CREATION_DYNAMIC_EUDEV=y
+BR2_PACKAGE_EUDEV=y
+
 BR2_PACKAGE_QT5=y
 BR2_PACKAGE_QT5BASE=y
 BR2_PACKAGE_QT5BASE_LINUXFB=y
