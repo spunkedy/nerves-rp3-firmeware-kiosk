@@ -40,13 +40,13 @@ camera_auto_detect=1
 # DT dependency cycles and prevented VC4 from initializing at all.
 dtoverlay=rpi-ft5406
 dtoverlay=rpi-backlight
-# vc4-fkms-v3d (firmware-KMS) instead of vc4-kms-v3d (kernel-KMS): the
-# firmware (start.elf) drives the DSI panel directly — the same path
-# that worked under the legacy fbdev setup — while still exposing a
-# /dev/dri/card0 that libwpe/Cog can render through. With pure
-# vc4-kms-v3d the kernel's DSI subdevice didn't bind, so DSI never
-# enumerated as a DRM connector (only HDMI did).
-dtoverlay=vc4-fkms-v3d
+dtoverlay=vc4-kms-v3d
+# Per RPi docs: explicitly mark the LCD as default and ensure firmware
+# doesn't ignore it. Without these, vc4-kms-v3d on rpi3 only binds the
+# HDMI subdevice; the DSI subdevice stays unbound and the panel never
+# enumerates as a DRM connector.
+display_default_lcd=1
+ignore_lcd=0
 max_framebuffers=2
 disable_overscan=1
 
