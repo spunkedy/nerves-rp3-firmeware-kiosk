@@ -43,7 +43,10 @@ dtoverlay=rpi-backlight
 dtoverlay=vc4-kms-v3d
 max_framebuffers=2
 disable_overscan=1
-disable_fw_kms_setup=1
+# disable_fw_kms_setup intentionally NOT set — let the firmware bring up
+# the DSI panel during start.elf, then VC4 KMS takes over an already-
+# initialized display. Setting it to 1 prevented DSI from coming up at
+# all (only HDMI was visible to DRM).
 
 # Comment this in or modify to enable OneWire
 # NOTE: check that the overlay that you specify is in the boot partition or
