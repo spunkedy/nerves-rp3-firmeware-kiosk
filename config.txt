@@ -27,27 +27,13 @@ dtparam=audio=on
 # Automatically load overlays for detected cameras
 camera_auto_detect=1
 
-# Raspberry Pi 7" DSI Touchscreen + VC4 KMS.
-# rpi-ft5406 brings up the DSI panel + touch controller; rpi-backlight
-# wires the backlight (GPIO + PWM). VC4 KMS then sees the DSI panel
-# as a connected DRM connector. Removing these breaks DSI detection
-# entirely (vc4 module loads but registers no card).
-# Empirically verified working DRM init on rpi3 with this exact combo:
-#   rpi-ft5406 + rpi-backlight + vc4-kms-v3d
-# This brings up VC4 + HDMI connector. The DSI panel still reports
-# "not connected" — that's a separate device-tree issue we'll fix in
-# a later release. Trying vc4-kms-dsi-7inch (alone or combined) caused
-# DT dependency cycles and prevented VC4 from initializing at all.
+# Raspberry Pi 7" DSI Touchscreen — legacy fbdev path.
+# Under VC4 KMS the DSI subdevice doesn't bind on this firmware/kernel
+# combo, so we let the firmware (start.elf) drive the DSI panel
+# directly. The kernel sees /dev/fb0; Qt5 WebEngine's linuxfb QPA
+# plugin renders to it.
 dtoverlay=rpi-ft5406
 dtoverlay=rpi-backlight
-dtoverlay=vc4-kms-v3d
-# Per RPi docs: explicitly mark the LCD as default and ensure firmware
-# doesn't ignore it. Without these, vc4-kms-v3d on rpi3 only binds the
-# HDMI subdevice; the DSI subdevice stays unbound and the panel never
-# enumerates as a DRM connector.
-display_default_lcd=1
-ignore_lcd=0
-max_framebuffers=2
 disable_overscan=1
 
 # Comment this in or modify to enable OneWire
