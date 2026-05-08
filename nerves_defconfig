@@ -130,3 +130,19 @@ BR2_PACKAGE_QT5WEBENGINE=y
 
 # Default UI font for the browser.
 BR2_PACKAGE_LIBERATION=y
+
+# --- ffmpeg ---
+# baby_firmware spawns `ffmpeg` per camera to decode RTSP into PCM
+# (audio-meter pipeline) and JPEG snapshots. Without ffmpeg the
+# Cameras.Worker crashes with `:ffmpeg_not_found` on every camera and
+# the kiosk only ever shows "no signal" placeholders.
+BR2_PACKAGE_FFMPEG=y
+BR2_PACKAGE_FFMPEG_FFMPEG=y
+BR2_PACKAGE_FFMPEG_DECODER=y
+BR2_PACKAGE_FFMPEG_ENCODER=y
+BR2_PACKAGE_FFMPEG_DEMUXER=y
+BR2_PACKAGE_FFMPEG_MUXER=y
+BR2_PACKAGE_FFMPEG_PROTOCOL=y
+BR2_PACKAGE_FFMPEG_PARSER=y
+BR2_PACKAGE_FFMPEG_FILTER=y
+BR2_PACKAGE_FFMPEG_BSF=y
