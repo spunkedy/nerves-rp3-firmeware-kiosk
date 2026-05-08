@@ -146,3 +146,7 @@ BR2_PACKAGE_FFMPEG_PROTOCOL=y
 BR2_PACKAGE_FFMPEG_PARSER=y
 BR2_PACKAGE_FFMPEG_FILTER=y
 BR2_PACKAGE_FFMPEG_BSF=y
+# libswscale provides the `scale` filter, needed for the camera
+# snapshot pipeline's `-vf "fps=N,scale=W:-2"`. Without it, ffmpeg
+# fails: "scale filter not present, cannot convert formats."
+BR2_PACKAGE_FFMPEG_SWSCALE=y
