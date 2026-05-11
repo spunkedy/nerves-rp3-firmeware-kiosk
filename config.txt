@@ -36,6 +36,20 @@ dtoverlay=rpi-ft5406
 dtoverlay=rpi-backlight
 disable_overscan=1
 
+# Mirror the DSI panel output to HDMI so a TV/monitor plugged into
+# the Pi shows the same kiosk UI. `max_framebuffers=2` makes the
+# firmware allocate /dev/fb1 for the HDMI display in addition to
+# /dev/fb0 for the DSI panel. `hdmi_force_hotplug=1` keeps the HDMI
+# output enabled even when no display is attached at boot (so a
+# user can hot-plug a monitor later). The mirroring itself is done
+# by `BabyFirmware.FbMirror`, which blits /dev/fb0 → /dev/fb1 at
+# ~30 fps.
+max_framebuffers=2
+hdmi_force_hotplug=1
+hdmi_group=1
+hdmi_mode=4
+hdmi_drive=2
+
 # Comment this in or modify to enable OneWire
 # NOTE: check that the overlay that you specify is in the boot partition or
 #       this won't work.
